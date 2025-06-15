@@ -1,18 +1,31 @@
-# NoGNightly
-This branch isn't depend on `main`, but a parallel development branch with `main`
+# 🌙 NoGNightly
+
+This is an **independent development branch**, not based on `main`.  
+It serves as a **sandbox** for new features, experiments and breaking changes.
+
 ---
-## Then what the heck is this?
-This branch serve as a **sandbox** for development process, so its very buggy
 
-As a development sandbox, of course it contain these:
-- Unreleased features [Experimental]
-- Test stuff
-- Breaking changes (continuously commit)
+## 🧪 What's in here?
 
-## How 2 try
+- Unreleased experimental features
+- Buggy test logic
+- Continuous WIP (messy commits welcome)
+
+> ⚠️ Not intended for production or merge into `main`.
+
+---
+
+## 🚀 Try it out
+
 ```bash
 git clone https://github.com/quydev-fs/NoGtube.git
 cd NoGtube
 git checkout nightly
+python app.py
 ```
-> Thing of it like a experimental branch, new features of the NoGtube come from here
+### 📌 Notes for Contributors
+
+Although GitHub may suggest opening a pull request to `main`,  
+**this is not recommended**, as this branch is developed independently.
+
+If you wish to contribute to the experimental track, feel free to open a PR targeting `nightly` instead.
