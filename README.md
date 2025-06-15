@@ -17,3 +17,8 @@ cd NoGtube
 git checkout nightly
 ```
 > Thing of it like a experimental branch, new features of the NoGtube come from here
+
+⚠️ This branch is developed **independently** from `main`.
+Although GitHub may suggest a Pull Request, this branch is **not intended to be merged**.
+
+Feel free to explore, test, or contribute to this direction separately.
