@@ -1,36 +1,18 @@
-# 🎬 YouTube FOSS Player
+# NoGNightly
+This branch isn't depend on `main`, but a parallel development branch with `main`
+---
+## Then what the heck is this?
+This branch serve as a **sandbox** for development process, so its very buggy
 
-![Python](https://img.shields.io/badge/made%20with-Python-blue?logo=python)
-![yt-dlp](https://img.shields.io/badge/powered%20by-yt--dlp-yellow?logo=youtube)
-![License](https://img.shields.io/github/license/quydev-fs/NoGtube)
-![Pre-release](https://img.shields.io/badge/status-pre--release-orange)
+As a development sandbox, of course it contain these:
+- Unreleased features [Experimental]
+- Test stuff
+- Breaking changes (continuously commit)
 
-Self-hosted frontend & backend to search and play YouTube videos using `yt-dlp`.
-
-- 🔍 Search via yt-dlp (`ytsearch`)
-- 🎥 Stream in-browser with `<video>`
-- 🎧 Supports bestaudio (music mode)
-- 🌍 No ads, no tracking, no Google
-- 💻 Ready for Termux / Flask / PWA
-
-## 🚀 Tech Stack
-
-- Python + Flask
-- HTML5 + JS + CSS
-- yt-dlp (CLI)
-
-## ⬇️ Install
+## How 2 try
 ```bash
 git clone https://github.com/quydev-fs/NoGtube.git
+cd NoGtube
+git checkout nightly
 ```
-## 🛠️ Run
-
-```bash
-pip install flask yt-dlp
-python app.py
-```
-
-Goto http://localhost:5000 
-(or http://127.0.0.1:5000)
-
-Enjoy!
+> Thing of it like a experimental branch, new features of the NoGtube come from here
