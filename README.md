@@ -23,5 +23,9 @@ cd NoGtube
 git checkout nightly
 python app.py
 ```
-# Notes for contributors
-although Github may suggest for a PR to `main`. but its not recommended to. because as I mentioned above, it is an **independent development branch**
+### 📌 Notes for Contributors
+
+Although GitHub may suggest opening a pull request to `main`,  
+**this is not recommended**, as this branch is developed independently.
+
+If you wish to contribute to the experimental track, feel free to open a PR targeting `nightly` instead.
