@@ -1,106 +1,9 @@
-<!DOCTYPE html>
-<html lang="vi">
+<!DOCTYPE html><html lang="vi">
 <head>
   <meta charset="UTF-8">
   <title>YouTube FOSS Player</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #121212;
-      color: #e0e0e0;
-      margin: 0;
-      padding: 1rem;
-    }
-    h1 {
-      text-align: center;
-      color: #ff5252;
-      margin-bottom: 1rem;
-    }
-    #search-bar {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    input, select {
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      outline: none;
-    }
-    input {
-      width: 60%;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 5px;
-      background-color: #ff5252;
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #e53935;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-      max-width: 800px;
-      margin: 0 auto 1rem;
-    }
-    li {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.75rem;
-      padding: 0.75rem;
-      background: #1e1e1e;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-    li:hover {
-      background: #2c2c2c;
-    }
-    li.playing {
-      background: #37474f;
-      border-left: 4px solid #ff5252;
-    }
-    .thumbnail {
-      width: 120px;
-      height: 67px;
-      object-fit: cover;
-      border-radius: 6px;
-      margin-right: 1rem;
-    }
-    .title {
-      flex-grow: 1;
-      color: #90caf9;
-      cursor: pointer;
-    }
-    #player-container {
-      text-align: center;
-      display: none;
-    }
-    #player {
-      max-width: 90%;
-      height: auto;
-      border-radius: 10px;
-    }
-    #loading {
-      text-align: center;
-      margin-top: 2rem;
-      display: none;
-      font-size: 1.2rem;
-      color: #bbb;
-    }
-    #load-more {
-      text-align: center;
-      margin: 1rem;
-    }
-  </style>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <h1 data-lang="title">📺 Trình phát YouTube FOSS</h1>
@@ -110,14 +13,13 @@
       <option value="best">Mặc định</option>
       <option value="best[height<=720]">720p</option>
       <option value="best[height<=480]">480p</option>
-      <option value="bestaudio">Chỉ âm thanh</option>
     </select>
     <button onclick="startSearch()">🔍</button>
   </div>
 
-  <div id="loading">⏳ Đang tìm kiếm...</div>
+  <div id="loading" data-lang="searching">⏳ Đang tìm kiếm...</div>
   <ul id="results"></ul>
-  <div id="load-more"><button onclick="loadMore()">Tải thêm...</button></div>
+  <div id="load-more"><button data-lang="btn_more" onclick="loadMore()">Tải thêm...</button></div>
 
   <div id="player-container">
     <h2 data-lang="now_playing">🎬 Đang phát</h2>
@@ -129,32 +31,77 @@
     let lang = 'vi';
     let currentQuery = '';
     let offset = 0;
-    let maxResults = 5;
+    let maxResults;
+    let configLoaded = false;
 
     const i18n = {
       vi: {
         title: "📺 Trình phát YouTube FOSS",
         now_playing: "🎬 Đang phát",
-        searching: "⏳ Đang tìm kiếm..."
+        searching: "⏳ Đang tìm kiếm...",
+        placeholder: "Tìm kiếm video...",
+        btn_search: "🔍",
+        btn_more: "Tải thêm...",
+        opt_default: "Mặc định",
+        opt_720p: "720p",
+        opt_480p: "480p"
       },
       en: {
         title: "📺 YouTube FOSS Player",
         now_playing: "🎬 Now Playing",
-        searching: "⏳ Searching..."
+        searching: "⏳ Searching...",
+        placeholder: "Search video...",
+        btn_search: "🔍",
+        btn_more: "Load more...",
+        opt_default: "Default",
+        opt_720p: "720p",
+        opt_480p: "480p"
       }
     };
 
     function setLang(l) {
       lang = l;
+
       document.querySelectorAll('[data-lang]').forEach(el => {
         const key = el.getAttribute('data-lang');
         if (i18n[lang] && i18n[lang][key]) {
           el.textContent = i18n[lang][key];
         }
       });
+
+      document.getElementById("query").placeholder = i18n[lang].placeholder;
+
+      const options = document.getElementById("quality").options;
+      options[0].text = i18n[lang].opt_default;
+      options[1].text = i18n[lang].opt_720p;
+      options[2].text = i18n[lang].opt_480p;
+
+      document.querySelector("button[onclick='startSearch()']").textContent = i18n[lang].btn_search;
+      document.querySelector("#load-more button").textContent = i18n[lang].btn_more;
     }
 
+    fetch("/static/config.json")
+      .then(res => res.json())
+      .then(data => {
+        lang = data.lang || lang;
+        maxResults = data.maxResults || 5;
+        setLang(lang);
+        configLoaded = true;
+        console.log("✅ Config loaded:", data);
+      })
+      .catch(err => {
+        console.warn("⚠️ Không thể load config.json, dùng mặc định.", err);
+        maxResults = 5;
+        setLang(lang);
+        configLoaded = true;
+      });
+
     function startSearch() {
+      if (!configLoaded) {
+        alert("🔄 Đang tải cấu hình, thử lại sau...");
+        return;
+      }
+
       currentQuery = document.getElementById("query").value.trim();
       offset = 0;
       document.getElementById("results").innerHTML = "";
@@ -164,8 +111,9 @@
 
     async function loadMore() {
       if (!currentQuery) return;
-      document.getElementById("loading").style.display = "block";
+      console.log("🔢 maxResults =", maxResults);
 
+      document.getElementById("loading").style.display = "block";
       const res = await fetch(`/search?q=${encodeURIComponent(currentQuery)}`);
       const videos = await res.json();
 
@@ -208,8 +156,6 @@
       player.play();
       container.style.display = "block";
     }
-
-    setLang(lang);
   </script>
 </body>
 </html>

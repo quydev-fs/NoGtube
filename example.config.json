@@ -1,0 +1,5 @@
+// put this in static/config.json
+{
+  "lang": "en",
+  "maxResults": 7
+}
