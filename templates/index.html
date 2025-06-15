@@ -31,7 +31,8 @@
     let lang = 'vi';
     let currentQuery = '';
     let offset = 0;
-    let maxResults = 5;
+    let maxResults;
+    let configLoaded = false;
 
     const i18n = {
       vi: {
@@ -79,21 +80,28 @@
       document.querySelector("#load-more button").textContent = i18n[lang].btn_more;
     }
 
-    // Load external config
     fetch("/static/config.json")
       .then(res => res.json())
       .then(data => {
         lang = data.lang || lang;
-        maxResults = data.maxResults || maxResults;
+        maxResults = data.maxResults || 5;
         setLang(lang);
+        configLoaded = true;
         console.log("✅ Config loaded:", data);
       })
       .catch(err => {
         console.warn("⚠️ Không thể load config.json, dùng mặc định.", err);
+        maxResults = 5;
         setLang(lang);
+        configLoaded = true;
       });
 
     function startSearch() {
+      if (!configLoaded) {
+        alert("🔄 Đang tải cấu hình, thử lại sau...");
+        return;
+      }
+
       currentQuery = document.getElementById("query").value.trim();
       offset = 0;
       document.getElementById("results").innerHTML = "";
@@ -103,8 +111,9 @@
 
     async function loadMore() {
       if (!currentQuery) return;
-      document.getElementById("loading").style.display = "block";
+      console.log("🔢 maxResults =", maxResults);
 
+      document.getElementById("loading").style.display = "block";
       const res = await fetch(`/search?q=${encodeURIComponent(currentQuery)}`);
       const videos = await res.json();
 
