@@ -5,7 +5,7 @@ This project follows **semver pre-release** (`alpha`, `beta`, etc.) while in ear
 
 ---
 
-## [v0.1.0-alpha.1] – 2025-06-15
+## [v0.1.0-alpha.1] – 2025-06-15 • [Latest]
 
 ### ✨ Added
 - JSON configuration via `static/config.json`
