@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube FOSS Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1 data-lang="title">📺 Trình phát YouTube FOSS</h1>
+  <div id="search-bar">
+    <input id="query" placeholder="Tìm kiếm video..." />
+    <select id="quality">
+      <option value="best">Mặc định</option>
+      <option value="best[height<=720]">720p</option>
+      <option value="best[height<=480]">480p</option>
+    </select>
+    <button onclick="startSearch()">🔍</button>
+  </div>
+
+  <div id="loading" data-lang="searching">⏳ Đang tìm kiếm...</div>
+  <ul id="results"></ul>
+  <div id="load-more"><button data-lang="btn_more" onclick="loadMore()">Tải thêm...</button></div>
+
+  <div id="player-container">
+    <h2 data-lang="now_playing">🎬 Đang phát</h2>
+    <video id="player" controls></video>
+  </div>
+
+  <script>
+    let currentPlaying = null;
+    let lang = 'vi';
+    let currentQuery = '';
+    let offset = 0;
+    let maxResults = 5;
+
+    const i18n = {
+      vi: {
+        title: "📺 Trình phát YouTube FOSS",
+        now_playing: "🎬 Đang phát",
+        searching: "⏳ Đang tìm kiếm...",
+        placeholder: "Tìm kiếm video...",
+        btn_search: "🔍",
+        btn_more: "Tải thêm...",
+        opt_default: "Mặc định",
+        opt_720p: "720p",
+        opt_480p: "480p"
+      },
+      en: {
+        title: "📺 YouTube FOSS Player",
+        now_playing: "🎬 Now Playing",
+        searching: "⏳ Searching...",
+        placeholder: "Search video...",
+        btn_search: "🔍",
+        btn_more: "Load more...",
+        opt_default: "Default",
+        opt_720p: "720p",
+        opt_480p: "480p"
+      }
+    };
+
+    function setLang(l) {
+      lang = l;
+
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        const key = el.getAttribute('data-lang');
+        if (i18n[lang] && i18n[lang][key]) {
+          el.textContent = i18n[lang][key];
+        }
+      });
+
+      document.getElementById("query").placeholder = i18n[lang].placeholder;
+
+      const options = document.getElementById("quality").options;
+      options[0].text = i18n[lang].opt_default;
+      options[1].text = i18n[lang].opt_720p;
+      options[2].text = i18n[lang].opt_480p;
+
+      document.querySelector("button[onclick='startSearch()']").textContent = i18n[lang].btn_search;
+      document.querySelector("#load-more button").textContent = i18n[lang].btn_more;
+    }
+
+    // Load external config
+    fetch("/static/config.json")
+      .then(res => res.json())
+      .then(data => {
+        lang = data.lang || lang;
+        maxResults = data.maxResults || maxResults;
+        setLang(lang);
+        console.log("✅ Config loaded:", data);
+      })
+      .catch(err => {
+        console.warn("⚠️ Không thể load config.json, dùng mặc định.", err);
+        setLang(lang);
+      });
+
+    function startSearch() {
+      currentQuery = document.getElementById("query").value.trim();
+      offset = 0;
+      document.getElementById("results").innerHTML = "";
+      document.getElementById("player-container").style.display = "none";
+      loadMore();
+    }
+
+    async function loadMore() {
+      if (!currentQuery) return;
+      document.getElementById("loading").style.display = "block";
+
+      const res = await fetch(`/search?q=${encodeURIComponent(currentQuery)}`);
+      const videos = await res.json();
+
+      const list = document.getElementById("results");
+      document.getElementById("loading").style.display = "none";
+
+      videos.slice(offset, offset + maxResults).forEach((video, index) => {
+        const li = document.createElement("li");
+
+        const thumb = document.createElement("img");
+        thumb.src = `https://i.ytimg.com/vi/${video.url.split('v=')[1]}/hqdefault.jpg`;
+        thumb.className = "thumbnail";
+
+        const title = document.createElement("div");
+        title.textContent = video.title;
+        title.className = "title";
+        title.onclick = () => play(video.url, li);
+
+        li.appendChild(thumb);
+        li.appendChild(title);
+        list.appendChild(li);
+      });
+
+      offset += maxResults;
+    }
+
+    function play(videoUrl, li) {
+      const player = document.getElementById("player");
+      const container = document.getElementById("player-container");
+      const quality = document.getElementById("quality").value;
+
+      if (currentPlaying) {
+        currentPlaying.classList.remove("playing");
+      }
+      currentPlaying = li;
+      currentPlaying.classList.add("playing");
+
+      player.src = `/play?url=${encodeURIComponent(videoUrl)}&quality=${encodeURIComponent(quality)}`;
+      player.load();
+      player.play();
+      container.style.display = "block";
+    }
+  </script>
+</body>
+</html>
