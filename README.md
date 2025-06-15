@@ -1,16 +1,18 @@
 # 📺 NoGtube - FOSS YouTube Player
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Status](https://img.shields.io/badge/status-stable-green)
+![Status](https://img.shields.io/badge/status-pre_release-orange)
 ![Python](https://img.shields.io/badge/python-3.7%2B-blue)
 ![yt-dlp](https://img.shields.io/badge/powered%20by-yt--dlp-yellow)
-[![nightly](https://img.shields.io/badge/branch-nightly-blueviolet)](https://github.com/quydev-fs/NoGtube/tree/nightly)
+[![nightly](https://img.shields.io/badge/branch-main-blue)](https://github.com/quydev-fs/NoGtube/tree/nightly)
 
 **NoGtube** is a simple, lightweight and privacy-friendly YouTube player powered by Flask + yt-dlp.
 
 No ads, no tracking, no bloat. Just search → click → play.
+<img src="https://raw.githubusercontent.com/quydev-fs/NoGtube/refs/heads/main/imgs/demo.png" alt="demo">
 
-> 💡 Designed for devs, tinkerers, minimalist users and offline-friendly environments.
+
+> 💡 Designed for who hate Google, hate tracking and stuff like that
 
 ---
 
