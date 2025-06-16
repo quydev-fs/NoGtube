@@ -1,5 +1,8 @@
-// put this in static/config.json
+// edit this follow your favor and put this in static/config.json
 {
   "lang": "en",
-  "maxResults": 7
+  "maxResults": 7,
+  "theme": "default-light",
+  "port": 8080,
+  "listeningIP": "0.0.0.0" // 127.0.0.1: only this device, 0.0.0.0: all interfaces, device's IP: LAN access only.
 }
