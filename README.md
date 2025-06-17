@@ -24,12 +24,12 @@ No ads, no tracking, no bloat. Just search → click → play.
 
 ---
 
-## ⚙️ Conffigurationn & Runn
-- check <a href="">DOCUMENTAION.md</a>
+## ⚙️ Conffiguration & Run
+- check <a href="https://github.com/quydev-fs/NoGtube/blob/main/docs/DOCUMENTATION.md">DOCUMENTAION.md</a>
 ## Preview
-- check <a href="">PREVIEW.md</a>
+- check <a href="https://github.com/quydev-fs/NoGtube/blob/main/docs/PREVIEW.md">PREVIEW.md</a>
 ## Looking for changelog?
-- check <a href="">CHANGELOG.md</a>
+- check <a href="https://github.com/quydev-fs/NoGtube/blob/main/docs/CHANGELOG.md">CHANGELOG.md</a>
 ## Another Branch?
 - that `nightly` branch is my development branch. if you want to try, just running this command after clone and cd:
 ```bash
