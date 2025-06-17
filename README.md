@@ -9,9 +9,6 @@
 **NoGtube** is a simple, lightweight and privacy-friendly YouTube player powered by Flask + yt-dlp.
 
 No ads, no tracking, no bloat. Just search → click → play.
-<img src="https://raw.githubusercontent.com/quydev-fs/NoGtube/refs/heads/main/imgs/demo.png" alt="demo">
-
-
 > 💡 Designed for who hate Google, hate tracking and stuff like that
 
 ---
@@ -27,28 +24,12 @@ No ads, no tracking, no bloat. Just search → click → play.
 
 ---
 
-## ⚙️ Configuration
-
-Edit `static/config.json`:
-
-```json
-{
-  "lang": "en", // or "vi" for Vietnamese
-  "maxResults": 7
-}
-```
-
-## Setup
-```bash
-git clone https://github.com/quydev-fs/NoGtube
-cd NoGtube
-pip install -r requirements.txt
-```
-## Run
-- after configuring NoGtube, run this to start the server:
-```bash
-python app.py 
-```
+## ⚙️ Conffigurationn & Runn
+- check <a href="">DOCUMENTAION.md</a>
+## Preview
+- check <a href="">PREVIEW.md</a>
+## Looking for changelog?
+- check <a href="">CHANGELOG.md</a>
 ## Another Branch?
 - that `nightly` branch is my development branch. if you want to try, just running this command after clone and cd:
 ```bash

@@ -85,4 +85,4 @@ def play():
         return "❌ Stream failed", 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host=app_config.get("listeningIP", "0.0.0.0"), port=app_config.get("port", 5000))

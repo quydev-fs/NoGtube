@@ -1,4 +1,7 @@
 {
   "lang": "en",
-  "maxResults": 7
+  "maxResults": 7,
+  "theme": "default-dark",
+  "port": 3000,
+  "listeningIP": "127.0.0.1"
 }
