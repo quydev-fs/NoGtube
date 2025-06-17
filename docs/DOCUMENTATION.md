@@ -16,7 +16,9 @@
         + "127.0.0.1": only host can access
         + "0.0.0.0": all interface (include your device's IP (LAN access), 127.0.0.1 and all others)
         + your device's IP: LAN access only
-- after setting all that follow your preferences, delete all comments (start with "//") copy it to `static/config.json` with overwrite mode
+- after setting all that follow your preferences, delete all comments (start with "//") copy it to `static/config.json` with overwrite mode.
+
+- running by executing `python app.py`
 ## 2. For theme creators
 - for theme creators, I'm prepared a template file (`theme-template.css`), customize it to your favorite pallete by modify any `color` and `background-color` attributes.
 - after replace all the color inside that file, save it under your theme name (eg. `gruvbox-dark.css`) and move that file into `static/themes/`.
