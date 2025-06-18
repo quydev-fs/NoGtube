@@ -1,6 +1,15 @@
 # Documentation for configuring / creating theme
-
-## 1. Basics
+## 1. Setup
+- run this command for clonning repo
+```bash
+git clone https://github.com/quydev-fs/NoGtube.git
+```
+- goto repo `cd NoGtube`
+- installing dependencies
+```bash
+pip install -r requirement.txt
+```
+## 2. Basics
 - with users, I'm prepared a example config file (`example.config.json`). inside it contain:
     + `lang` key: for configuring language, it has 2 possible value - `"en"` (English) and `"vi"` (Vuetnamese).
     + `maxResults` key: for config the number of results will be displayed (careful, it is dangerous for setting this value high. youtube may block your IP)
@@ -19,7 +28,7 @@
 - after setting all that follow your preferences, delete all comments (start with "//") copy it to `static/config.json` with overwrite mode.
 
 - running by executing `python app.py`
-## 2. For theme creators
+## 3. For theme creators
 - for theme creators, I'm prepared a template file (`theme-template.css`), customize it to your favorite pallete by modify any `color` and `background-color` attributes.
 - after replace all the color inside that file, save it under your theme name (eg. `gruvbox-dark.css`) and move that file into `static/themes/`.
 - for testing the new theme that you just created, modify the `static/config.json`'s theme key into your theme's filename without that `.css` file extension
